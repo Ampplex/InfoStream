@@ -1,0 +1,8 @@
+{
+  "expo": {
+    "name": "NewsApp",
+    "slug": "NewsApp",
+    "version": "1.0.0",
+    "jsEngine": "hermes"
+  }
+}
