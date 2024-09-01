@@ -3,6 +3,9 @@
     "name": "NewsApp",
     "slug": "NewsApp",
     "version": "1.0.0",
-    "jsEngine": "hermes"
+    "jsEngine": "hermes",
+    "plugins": [
+      "expo-secure-store"
+    ]
   }
 }

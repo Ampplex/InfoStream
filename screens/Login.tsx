@@ -1,7 +1,83 @@
 import { StyleSheet, Text, TextInput, View, Image, TouchableOpacity, Dimensions } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
+import { showMessage } from "react-native-flash-message";
+import { LoginData } from '../abstraction/authentication';
+import queryString from "query-string";
 
-const Login = () => {
+interface LOGIN_FUNC {
+  (email: string, password: string) : Promise<void>
+}
+
+const Login = ({navigation}) => {
+
+  const [email, setEmail] = useState<string>("")
+  const [password, setPassword] = useState<string>("")
+
+  const loginBtnHandler: LOGIN_FUNC = async (email: string, password: string) : Promise<void> => {
+
+    const apiUrl: string = "https://news-app-660u.onrender.com/api/users/login";
+
+    // Create form data
+    const data: LoginData = {
+      email: email,
+      password: password
+    };
+
+    // Serialize data to x-www-form-urlencoded format
+    const formDataString = queryString.stringify(data);
+
+    console.log(formDataString);
+
+    // Making a POST request to login to an existing account
+    fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        // Add any additional headers if needed
+      },
+      body: formDataString,
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        // setLoginPressable(true);
+        return response.json();
+      })
+      .then((data) => {
+        console.log("POST request successful:", data.msg == "Login successful");
+        if (data.msg == "Login successful") {
+          showMessage({
+            message: "Logined successfully!",
+            type: "success",
+            duration: 1500,
+            floating: true, // This allows the message to be displayed even if the user scrolls
+            icon: "success",
+          });
+          // storeAuthToken("User_token", data.token);
+          // navigation.replace("Route");
+        } else {
+          showMessage({
+            message: "Invalid credentials",
+            type: "danger",
+            duration: 1500,
+            floating: true, // This allows the message to be displayed even if the user scrolls
+            icon: "danger",
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error during POST request:", error);
+        showMessage({
+          message: "Invalid credentials",
+          type: "danger",
+          duration: 1500,
+          floating: true, // This allows the message to be displayed even if the user scrolls
+          icon: "danger",
+        });
+      });
+  } 
+
   return (
     <View style={styles.container}>
       <View style={styles.Card}>
@@ -22,8 +98,9 @@ const Login = () => {
             width: 250,
             height: 37,
             borderRadius: 20,
-            paddingLeft: 10
+            paddingLeft: 15
           }}
+          onChangeText={(email: string) => setEmail(email)}
           />
         </View>
         <View style={styles.Password}>
@@ -34,24 +111,29 @@ const Login = () => {
             width: 250,
             height: 37,
             borderRadius: 20,
-            paddingLeft: 10
+            paddingLeft: 15
           }}
           secureTextEntry={true}
+          onChangeText={(password: string) => setPassword(password)}
           />
         </View>
 
-       <TouchableOpacity style={styles.loginBtn}>
+       <TouchableOpacity style={styles.loginBtn} onPress={() => loginBtnHandler(email, password)}>
         <Text style={styles.text}>Login</Text>
        </TouchableOpacity>
 
       <TouchableOpacity style={{
         justifyContent: "center",
-        alignItems: "center"
-      }}>
+        alignItems: "center",
+        width: "100%",
+        height: "10%",
+        position: "absolute",
+        bottom: 35
+      }}
+      onPress={() => navigation.navigate("Register")}
+      >
         <Text style={{
           textAlign: "center",
-          position: "absolute",
-          bottom: -100,
           color: "#7695FF",
           fontFamily: 'sans-serif-medium'
         }}>Don't have an account? Register</Text>
@@ -80,14 +162,16 @@ const styles = StyleSheet.create({
   Card: {
     backgroundColor: "#fafafa",
     width: Dimensions.get("screen").width * 0.85,
-    height: Dimensions.get("screen").height * 0.5,
+    height: Dimensions.get("window").height * 0.55,
     borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center"
   },
   Email: {
     width: 250,
     height: 37,
     backgroundColor: "#EEEEEE",
-    top: -10,
+    top: -25,
     alignSelf: "center",
     borderRadius: 20
   },
@@ -95,21 +179,23 @@ const styles = StyleSheet.create({
     width: 250,
     height: 37,
     backgroundColor: "#EEEEEE",
-    top: 10,
+    top: 4,
     alignSelf: "center",
     borderRadius: 20
   },
   Icon: {
     width: 180,
     height: 130,
-    alignSelf: "center"
+    alignSelf: "center",
+    position: "absolute",
+    top: 0
   },
   loginBtn: {
     width: 120,
     height: 40,
     backgroundColor: "#7695FF",
     alignSelf: "center",
-    top: 40,
+    top: 50,
     borderRadius: 20,
     justifyContent: "center",
     alignItems: "center"
