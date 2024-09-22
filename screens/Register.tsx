@@ -8,7 +8,7 @@ interface REGISTER_FUNC {
     (username: string, email: string, password: string): Promise<void>
 }
 
-const Register = ({ navigation }) => {
+const Register = ({ navigation }: any) => {
 
     const [username, setUsername] = useState<string>("")
     const [email, setEmail] = useState<string>("")

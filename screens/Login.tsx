@@ -5,15 +5,16 @@ import { LoginData } from '../abstraction/authentication';
 import queryString from "query-string";
 
 interface LOGIN_FUNC {
-  (email: string, password: string) : Promise<void>
+  (email: string, password: string): Promise<void>
 }
 
-const Login = ({navigation}) => {
+const Login = ({ navigation }: any) => {
 
-  const [email, setEmail] = useState<string>("")
-  const [password, setPassword] = useState<string>("")
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [loginPressable, setLoginPressable] = useState<boolean>(true);
 
-  const loginBtnHandler: LOGIN_FUNC = async (email: string, password: string) : Promise<void> => {
+  const loginBtnHandler: LOGIN_FUNC = async (email: string, password: string): Promise<void> => {
 
     const apiUrl: string = "https://news-app-660u.onrender.com/api/users/login";
 
@@ -55,7 +56,7 @@ const Login = ({navigation}) => {
             icon: "success",
           });
           // storeAuthToken("User_token", data.token);
-          // navigation.replace("Route");
+          
         } else {
           showMessage({
             message: "Invalid credentials",
@@ -76,12 +77,12 @@ const Login = ({navigation}) => {
           icon: "danger",
         });
       });
-  } 
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.Card}>
-        
+
         <View style={styles.Icon}>
           <Image source={require('../assets/icon/icon.png')} style={{
             position: "absolute",
@@ -89,55 +90,61 @@ const Login = ({navigation}) => {
             height: "100%"
           }} />
         </View>
-    
+
         <View style={styles.Email}>
           <TextInput
-          placeholder='Email'
-          style={{
-            alignSelf: "center",
-            width: 250,
-            height: 37,
-            borderRadius: 20,
-            paddingLeft: 15
-          }}
-          onChangeText={(email: string) => setEmail(email)}
+            placeholder='Email'
+            style={{
+              alignSelf: "center",
+              width: 250,
+              height: 37,
+              borderRadius: 20,
+              paddingLeft: 15
+            }}
+            onChangeText={(email: string) => setEmail(email)}
           />
         </View>
         <View style={styles.Password}>
           <TextInput
-          placeholder='Password'
-          style={{
-            alignSelf: "center",
-            width: 250,
-            height: 37,
-            borderRadius: 20,
-            paddingLeft: 15
-          }}
-          secureTextEntry={true}
-          onChangeText={(password: string) => setPassword(password)}
+            placeholder='Password'
+            style={{
+              alignSelf: "center",
+              width: 250,
+              height: 37,
+              borderRadius: 20,
+              paddingLeft: 15
+            }}
+            secureTextEntry={true}
+            onChangeText={(password: string) => setPassword(password)}
           />
         </View>
 
-       <TouchableOpacity style={styles.loginBtn} onPress={() => loginBtnHandler(email, password)}>
-        <Text style={styles.text}>Login</Text>
-       </TouchableOpacity>
+        <TouchableOpacity style={styles.loginBtn} onPress={() => {
+          setLoginPressable(false);
+          // loginBtnHandler(email, password)
+          navigation.replace("Route");
+        }}
+        // disabled={!loginPressable}
+        >
+          <Text style={styles.text}>Login</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity style={{
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        height: "10%",
-        position: "absolute",
-        bottom: 35
-      }}
-      onPress={() => navigation.navigate("Register")}
-      >
-        <Text style={{
-          textAlign: "center",
-          color: "#7695FF",
-          fontFamily: 'sans-serif-medium'
-        }}>Don't have an account? Register</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={{
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100%",
+          height: "10%",
+          position: "absolute",
+          bottom: 35
+        }}
+          onPress={() => navigation.navigate("Register")}
+        >
+          <Text style={{
+            textAlign: "center",
+            color: "#7695FF",
+            fontFamily: 'sans-serif-medium'
+          }}>Don't have an account? Register</Text>
+        </TouchableOpacity>
 
       </View>
     </View>

@@ -5,12 +5,16 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './screens/Login';
 import FlashMessage from "react-native-flash-message";
 import Register from './screens/Register';
+import Route from './router/Route';
+import Data_State from './context/Data/Data_State';
+import WebViewScreen from './screens/WebViewScreen';
 
 const Stack = createNativeStackNavigator();
 
 function App() {
   return (
     <>
+    <Data_State>
      <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen 
@@ -23,9 +27,20 @@ function App() {
           component={Register} 
           options={{ headerShown: false }} 
         />
+        <Stack.Screen 
+          name="Route" 
+          component={Route} 
+          options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+          name="WebViewScreen" 
+          component={WebViewScreen} 
+          options={{ headerShown: true }} 
+        />
       </Stack.Navigator>
       <FlashMessage position={"bottom"} />
     </NavigationContainer>
+    </Data_State>
     </>
   );
 }
