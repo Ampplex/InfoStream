@@ -6,6 +6,11 @@
     "jsEngine": "hermes",
     "plugins": [
       "expo-secure-store"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "3a8b0805-5755-4147-8346-45da1155f22e"
+      }
+    }
   }
 }

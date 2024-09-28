@@ -35,7 +35,7 @@ function App() {
         <Stack.Screen 
           name="WebViewScreen" 
           component={WebViewScreen} 
-          options={{ headerShown: true }} 
+          options={{ headerShown: false }} 
         />
       </Stack.Navigator>
       <FlashMessage position={"bottom"} />

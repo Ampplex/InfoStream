@@ -141,7 +141,7 @@ const Login = ({ navigation }: any) => {
         >
           <Text style={{
             textAlign: "center",
-            color: "#7695FF",
+            color: "#604CC3",
             fontFamily: 'sans-serif-medium'
           }}>Don't have an account? Register</Text>
         </TouchableOpacity>
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
   loginBtn: {
     width: 120,
     height: 40,
-    backgroundColor: "#7695FF",
+    backgroundColor: "#604CC3",
     alignSelf: "center",
     top: 50,
     borderRadius: 20,

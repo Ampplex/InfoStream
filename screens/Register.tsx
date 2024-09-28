@@ -167,7 +167,7 @@ const Register = ({ navigation }: any) => {
                 >
                     <Text style={{
                         textAlign: "center",
-                        color: "#7695FF",
+                        color: "#604CC3",
                         fontFamily: 'sans-serif-medium'
                     }}>Already have an account? Login</Text>
                 </TouchableOpacity>
@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
     registerBtn: {
         width: 120,
         height: 40,
-        backgroundColor: "#7695FF",
+        backgroundColor: "#604CC3",
         alignSelf: "center",
         bottom: -135,
         borderRadius: 20,
