@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Home from '../screens/Home';
+import Search from '../screens/Search';
 
 const Route = ({ navigation }: any) => {
 
@@ -41,7 +42,7 @@ const Route = ({ navigation }: any) => {
     <View style={styles.container}>
       {activeTab == 'Home' ?
       <Home navigation={navigation} />
-      : <View/>}
+      : activeTab == 'Search' ? <Search navigation={navigation} /> : null}
       <View style={styles.TabNavigator}>
         <TouchableOpacity onPress={() => {
           if (activeTab !== "Home") {
